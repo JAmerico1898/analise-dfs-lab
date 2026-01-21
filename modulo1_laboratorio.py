@@ -1,192 +1,522 @@
+"""
+Módulo 1 - Introdução à Análise Financeira
+Laboratório de Análise de Demonstrações Financeiras
+=======================================================
+Conteúdo:
+- Discussão orientada sobre usuários da informação contábil
+- Exercício diagnóstico de classificação de decisões
+- Mini-quiz conceitual de fixação (5 questões)
+"""
+
 import streamlit as st
 
+
 def run():
-    """
-    Função principal do Módulo 1.
-    Executada dinamicamente pelo Hub Central.
-    """
+    """Função principal do módulo - chamada pelo hub central."""
     
-    # Estilização CSS local para manter o padrão "Boutique Académica"
+    # =========================================================================
+    # CABEÇALHO DO MÓDULO
+    # =========================================================================
+    st.markdown("<h1>📊 Módulo 1 - Introdução à Análise Financeira</h1>", unsafe_allow_html=True)
+    
     st.markdown("""
-        <style>
-        .card-discussao {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 5px solid #b45309;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-            min-height: 180px;
-        }
-        .user-tag {
-            color: #b45309;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-            display: block;
-        }
-        .decision-highlight {
-            color: #1e293b;
-            font-weight: 600;
-            font-style: italic;
-        }
-        </style>
+        <div class="welcome-card">
+            <h3>🎯 Objetivos de Aprendizagem</h3>
+            <p>Ao final desta atividade, você será capaz de:</p>
+            <ul>
+                <li>Identificar os principais usuários das demonstrações financeiras</li>
+                <li>Compreender como diferentes stakeholders utilizam a mesma informação</li>
+                <li>Classificar decisões empresariais segundo o tipo de usuário</li>
+            </ul>
+        </div>
     """, unsafe_allow_html=True)
-
-    # Título do Módulo
-    st.markdown("<h1>Módulo 01: Introdução à Análise Financeira</h1>", unsafe_allow_html=True)
-    st.write("Nesta unidade, exploramos o papel da contabilidade como sistema de informação e os diferentes utilizadores das demonstrações.")
-
-    st.divider()
-
-    # --- 1. DISCUSSÃO ORIENTADA ---
-    st.subheader("1. Discussão Orientada")
-    st.markdown("**Provocação:** Como é que um investidor, um banco e um gestor tomam decisões a partir das mesmas demonstrações?")
     
-    col1, col2, col3 = st.columns(3)
+    # =========================================================================
+    # NAVEGAÇÃO POR ABAS
+    # =========================================================================
+    tab1, tab2, tab3 = st.tabs([
+        "💬 Discussão Orientada", 
+        "🔍 Exercício Diagnóstico", 
+        "📝 Mini-Quiz"
+    ])
+    
+    # =========================================================================
+    # ABA 1: DISCUSSÃO ORIENTADA
+    # =========================================================================
+    with tab1:
+        renderizar_discussao_orientada()
+    
+    # =========================================================================
+    # ABA 2: EXERCÍCIO DIAGNÓSTICO
+    # =========================================================================
+    with tab2:
+        renderizar_exercicio_diagnostico()
+    
+    # =========================================================================
+    # ABA 3: MINI-QUIZ
+    # =========================================================================
+    with tab3:
+        renderizar_mini_quiz()
 
+
+def renderizar_discussao_orientada():
+    """Renderiza a seção de discussão orientada."""
+    
+    st.markdown("### 💬 Discussão Orientada")
+    st.markdown("""
+        <div style='background-color: #fef3c7; padding: 20px; border-radius: 10px; 
+                    border-left: 5px solid #b45309; margin-bottom: 20px;'>
+            <strong>Questão Central:</strong><br>
+            <em>"Quais decisões um investidor, um banco e um gestor tomam a partir das mesmas demonstrações financeiras?"</em>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Apresentação dos três perfis de usuários
+    col1, col2, col3 = st.columns(3)
+    
     with col1:
         st.markdown("""
-            <div class="card-discussao">
-                <span class="user-tag">📈 Investidor</span>
-                <p class="decision-highlight">"Vale a pena comprar esta ação?"</p>
-                <p><small>Foco: Rentabilidade (ROE), potencial de dividendos e crescimento futuro do valor da empresa.</small></p>
+            <div style='background-color: #dbeafe; padding: 20px; border-radius: 10px; 
+                        text-align: center; height: 280px;'>
+                <h4>📈 Investidor</h4>
+                <p style='font-size: 0.9rem;'>Busca maximizar retorno sobre o capital investido</p>
+                <hr>
+                <p style='font-size: 0.85rem; text-align: left;'>
+                    <strong>Foco principal:</strong><br>
+                    • Rentabilidade<br>
+                    • Potencial de valorização<br>
+                    • Política de dividendos<br>
+                    • Risco do negócio
+                </p>
             </div>
         """, unsafe_allow_html=True)
-
+    
     with col2:
         st.markdown("""
-            <div class="card-discussao">
-                <span class="user-tag">🏦 Banco</span>
-                <p class="decision-highlight">"Eles vão conseguir pagar o empréstimo?"</p>
-                <p><small>Foco: Liquidez de curto prazo, garantias reais e risco de incumprimento ou insolvência.</small></p>
+            <div style='background-color: #dcfce7; padding: 20px; border-radius: 10px; 
+                        text-align: center; height: 280px;'>
+                <h4>🏦 Banco / Credor</h4>
+                <p style='font-size: 0.9rem;'>Avalia capacidade de pagamento e garantias</p>
+                <hr>
+                <p style='font-size: 0.85rem; text-align: left;'>
+                    <strong>Foco principal:</strong><br>
+                    • Liquidez<br>
+                    • Endividamento<br>
+                    • Geração de caixa<br>
+                    • Garantias reais
+                </p>
             </div>
         """, unsafe_allow_html=True)
-
+    
     with col3:
         st.markdown("""
-            <div class="card-discussao">
-                <span class="user-tag">👔 Gestor</span>
-                <p class="decision-highlight">"Onde podemos ser mais eficientes?"</p>
-                <p><small>Foco: Eficiência operacional, margens de lucro por produto e controlo rigoroso de custos.</small></p>
+            <div style='background-color: #fce7f3; padding: 20px; border-radius: 10px; 
+                        text-align: center; height: 280px;'>
+                <h4>👔 Gestor Interno</h4>
+                <p style='font-size: 0.9rem;'>Monitora performance e planeja operações</p>
+                <hr>
+                <p style='font-size: 0.85rem; text-align: left;'>
+                    <strong>Foco principal:</strong><br>
+                    • Eficiência operacional<br>
+                    • Margens de lucro<br>
+                    • Ciclo operacional<br>
+                    • Metas e orçamento
+                </p>
             </div>
         """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Seção interativa de reflexão
+    st.markdown("### 🤔 Reflexão Individual")
+    st.info("Antes de prosseguir, reflita sobre a questão central e registre suas ideias abaixo.")
+    
+    with st.expander("📝 Espaço para suas anotações", expanded=False):
+        col_inv, col_ban, col_ges = st.columns(3)
+        
+        with col_inv:
+            st.text_area(
+                "Decisões do Investidor:",
+                placeholder="Ex: Comprar ou vender ações...",
+                height=120,
+                key="notas_investidor"
+            )
+        
+        with col_ban:
+            st.text_area(
+                "Decisões do Banco:",
+                placeholder="Ex: Aprovar linha de crédito...",
+                height=120,
+                key="notas_banco"
+            )
+        
+        with col_ges:
+            st.text_area(
+                "Decisões do Gestor:",
+                placeholder="Ex: Reduzir custos operacionais...",
+                height=120,
+                key="notas_gestor"
+            )
+    
+    # Revelação das respostas sugeridas
+    with st.expander("✅ Ver Respostas Sugeridas", expanded=False):
+        st.markdown("""
+        #### Decisões típicas de cada usuário:
+        
+        **📈 Investidor:**
+        - Comprar, manter ou vender ações da empresa
+        - Participar de ofertas públicas (IPO, follow-on)
+        - Comparar retorno com outras oportunidades de investimento
+        - Avaliar se a política de dividendos atende suas expectativas
+        
+        **🏦 Banco / Credor:**
+        - Aprovar ou negar pedidos de empréstimo
+        - Definir limite de crédito e taxa de juros
+        - Exigir garantias adicionais
+        - Monitorar covenants (cláusulas restritivas)
+        - Renegociar prazos e condições
+        
+        **👔 Gestor Interno:**
+        - Ajustar preços de produtos/serviços
+        - Decidir sobre expansão ou redução de operações
+        - Alocar recursos entre departamentos
+        - Definir política de estoques
+        - Negociar prazos com fornecedores e clientes
+        """)
+    
+    st.markdown("---")
+    st.caption("💡 Dica: A mesma demonstração financeira conta histórias diferentes para cada usuário!")
 
-    st.markdown("<br>", unsafe_allow_html=True)
 
-    # --- 2. EXERCÍCIO DIAGNÓSTICO ---
-    st.subheader("2. Exercício Diagnóstico")
-    st.info("Classifique as decisões abaixo conforme o utilizador da informação predominante (não avaliativo).")
-
-    cenarios = [
+def renderizar_exercicio_diagnostico():
+    """Renderiza o exercício diagnóstico de classificação."""
+    
+    st.markdown("### 🔍 Exercício Diagnóstico")
+    st.markdown("""
+        <div style='background-color: #e0e7ff; padding: 15px; border-radius: 10px; margin-bottom: 20px;'>
+            <strong>Instrução:</strong> Classifique cada decisão empresarial abaixo de acordo com o 
+            principal usuário da informação contábil que a tomaria. Este exercício não é avaliativo 
+            e serve para você testar sua compreensão inicial do conteúdo.
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Definição das decisões e gabaritos
+    decisoes = [
         {
-            "pergunta": "Avaliar se a empresa tem ativos suficientes para dar como garantia num financiamento de 10 anos.",
-            "opcoes": ["Investidor", "Banco", "Gestor"],
-            "correta": "Banco",
-            "feedback": "Exato! O banco (credor) foca na solvência e nas garantias para mitigar o risco do empréstimo."
+            "id": 1,
+            "texto": "Aumentar a participação acionária na empresa após análise do ROE",
+            "resposta_correta": "Investidor",
+            "explicacao": "O ROE (Retorno sobre Patrimônio Líquido) é um indicador fundamental para investidores avaliarem se vale a pena aumentar sua participação."
         },
         {
-            "pergunta": "Decidir se o preço de venda deve ser aumentado para recuperar a margem bruta que caiu no último trimestre.",
-            "opcoes": ["Investidor", "Banco", "Gestor"],
-            "correta": "Gestor",
-            "feedback": "Correto! O gestor utiliza a contabilidade para decisões operacionais internas e correção de rotas."
+            "id": 2,
+            "texto": "Reduzir o prazo de pagamento a fornecedores para melhorar o índice de liquidez",
+            "resposta_correta": "Gestor",
+            "explicacao": "Decisões sobre prazos operacionais são tipicamente tomadas pela gestão interna da empresa."
         },
         {
-            "pergunta": "Analisar se o lucro líquido gerado justifica o risco de manter o capital aplicado nesta empresa em vez de no Tesouro.",
-            "opcoes": ["Investidor", "Banco", "Gestor"],
-            "correta": "Investidor",
-            "feedback": "Muito bem! O investidor foca no custo de oportunidade e no retorno sobre o capital próprio (ROE)."
+            "id": 3,
+            "texto": "Exigir garantia real adicional após constatar aumento do endividamento",
+            "resposta_correta": "Banco/Credor",
+            "explicacao": "Credores monitoram o endividamento e podem exigir garantias adicionais para proteger seus empréstimos."
+        },
+        {
+            "id": 4,
+            "texto": "Aprovar o orçamento de marketing com base na margem de contribuição",
+            "resposta_correta": "Gestor",
+            "explicacao": "A alocação de recursos internos é uma decisão gerencial baseada em indicadores de performance."
+        },
+        {
+            "id": 5,
+            "texto": "Vender as ações antes da divulgação de resultados fracos esperados",
+            "resposta_correta": "Investidor",
+            "explicacao": "Decisões de compra e venda de ações são típicas de investidores (atenção: venda com informação privilegiada é ilegal!)."
+        },
+        {
+            "id": 6,
+            "texto": "Incluir cláusula de covenant exigindo liquidez corrente mínima de 1,5",
+            "resposta_correta": "Banco/Credor",
+            "explicacao": "Covenants são cláusulas restritivas impostas por credores em contratos de empréstimo."
+        },
+        {
+            "id": 7,
+            "texto": "Renegociar o prazo médio de recebimento de clientes",
+            "resposta_correta": "Gestor",
+            "explicacao": "A gestão do ciclo operacional e capital de giro é responsabilidade da administração."
+        },
+        {
+            "id": 8,
+            "texto": "Comparar o dividend yield com outras empresas do setor",
+            "resposta_correta": "Investidor",
+            "explicacao": "Investidores comparam retornos de dividendos para decidir onde alocar seu capital."
         }
     ]
+    
+    opcoes = ["Selecione...", "Investidor", "Banco/Credor", "Gestor"]
+    
+    # Inicializar estado das respostas
+    if 'respostas_exercicio' not in st.session_state:
+        st.session_state.respostas_exercicio = {d['id']: None for d in decisoes}
+    
+    if 'mostrar_resultado_exercicio' not in st.session_state:
+        st.session_state.mostrar_resultado_exercicio = False
+    
+    # Renderizar cada decisão
+    st.markdown("#### Classifique as decisões:")
+    
+    for decisao in decisoes:
+        col_texto, col_select = st.columns([3, 1])
+        
+        with col_texto:
+            st.markdown(f"**{decisao['id']}.** {decisao['texto']}")
+        
+        with col_select:
+            resposta = st.selectbox(
+                f"Usuário {decisao['id']}",
+                options=opcoes,
+                key=f"decisao_{decisao['id']}",
+                label_visibility="collapsed"
+            )
+            st.session_state.respostas_exercicio[decisao['id']] = resposta
+        
+        st.markdown("---")
+    
+    # Botão de verificação
+    col_btn1, col_btn2, col_btn3 = st.columns([1, 1, 1])
+    
+    with col_btn2:
+        if st.button("🎯 Verificar Respostas", use_container_width=True, type="primary"):
+            st.session_state.mostrar_resultado_exercicio = True
+    
+    # Exibir resultados
+    if st.session_state.mostrar_resultado_exercicio:
+        st.markdown("### 📊 Resultado do Exercício")
+        
+        acertos = 0
+        total = len(decisoes)
+        
+        for decisao in decisoes:
+            resposta_usuario = st.session_state.respostas_exercicio[decisao['id']]
+            correta = resposta_usuario == decisao['resposta_correta']
+            
+            if correta:
+                acertos += 1
+                icone = "✅"
+                cor = "#dcfce7"
+            elif resposta_usuario == "Selecione...":
+                icone = "⚪"
+                cor = "#f3f4f6"
+            else:
+                icone = "❌"
+                cor = "#fee2e2"
+            
+            st.markdown(f"""
+                <div style='background-color: {cor}; padding: 10px; border-radius: 8px; margin-bottom: 8px;'>
+                    <strong>{icone} Decisão {decisao['id']}:</strong> 
+                    Sua resposta: <em>{resposta_usuario}</em> | 
+                    Correta: <strong>{decisao['resposta_correta']}</strong>
+                    <br><small style='color: #64748b;'>{decisao['explicacao']}</small>
+                </div>
+            """, unsafe_allow_html=True)
+        
+        # Resumo
+        percentual = (acertos / total) * 100
+        
+        if percentual >= 80:
+            msg = "🌟 Excelente! Você demonstra ótima compreensão dos usuários da informação contábil!"
+            cor_msg = "#dcfce7"
+        elif percentual >= 60:
+            msg = "👍 Bom trabalho! Revise os conceitos das questões erradas."
+            cor_msg = "#fef3c7"
+        else:
+            msg = "📚 Recomendamos revisar o material teórico sobre usuários da informação contábil."
+            cor_msg = "#fee2e2"
+        
+        st.markdown(f"""
+            <div style='background-color: {cor_msg}; padding: 20px; border-radius: 10px; 
+                        text-align: center; margin-top: 20px;'>
+                <h3>Pontuação: {acertos}/{total} ({percentual:.0f}%)</h3>
+                <p>{msg}</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Botão para reiniciar
+        if st.button("🔄 Refazer Exercício"):
+            st.session_state.respostas_exercicio = {d['id']: None for d in decisoes}
+            st.session_state.mostrar_resultado_exercicio = False
+            st.rerun()
 
-    for i, c in enumerate(cenarios):
-        with st.expander(f"Cenário {i+1}: {c['pergunta']}"):
-            resp = st.radio("Selecione o utilizador:", c["opcoes"], key=f"ex_diag_{i}")
-            if st.button("Validar Cenário", key=f"btn_ex_{i}"):
-                if resp == c["correta"]:
-                    st.success(c["feedback"])
-                else:
-                    st.error("Resposta incorreta. Analise o objetivo principal da decisão.")
 
-    st.divider()
-
-    # --- 3. MINI-QUIZ DE FIXAÇÃO ---
-    st.subheader("3. Mini-Quiz de Fixação")
-    st.write("Teste os seus conhecimentos sobre os conceitos base da Aula 1.")
-
+def renderizar_mini_quiz():
+    """Renderiza o mini-quiz de fixação com 5 questões objetivas."""
+    
+    st.markdown("### 📝 Mini-Quiz de Fixação")
+    st.markdown("""
+        <div style='background-color: #f0fdf4; padding: 15px; border-radius: 10px; margin-bottom: 20px;'>
+            <strong>Instrução:</strong> Responda às 5 questões objetivas abaixo para testar sua 
+            compreensão dos conceitos fundamentais da análise de demonstrações financeiras.
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Banco de questões
     questoes = [
         {
-            "pergunta": "1. Qual a principal característica da Contabilidade Financeira?",
-            "opcoes": [
-                "É voltada para utilizadores internos e não segue padrões fixos.",
-                "Foca em utilizadores externos e segue normas padronizadas (IFRS/CPC).",
-                "Serve apenas para calcular o bónus dos diretores.",
-                "Não utiliza o regime de competência."
+            "id": 1,
+            "pergunta": "Qual é o principal objetivo da análise de demonstrações financeiras?",
+            "alternativas": [
+                "a) Calcular impostos devidos pela empresa",
+                "b) Extrair informações para tomada de decisões econômicas",
+                "c) Registrar transações contábeis",
+                "d) Elaborar o orçamento empresarial"
             ],
-            "correta": 1
+            "correta": "b",
+            "explicacao": "A análise de demonstrações financeiras visa extrair informações relevantes dos relatórios contábeis para subsidiar decisões de investimento, crédito e gestão."
         },
         {
-            "pergunta": "2. Por que razão a subjetividade é uma limitação da informação contábil?",
-            "opcoes": [
-                "Porque os números são inventados mensalmente.",
-                "Porque o uso de estimativas (ex: vida útil) depende do julgamento profissional.",
-                "Porque a contabilidade não utiliza matemática.",
-                "Porque os impostos mudam todos os dias."
+            "id": 2,
+            "pergunta": "Um banco, ao analisar as demonstrações de uma empresa solicitante de crédito, estará principalmente interessado em avaliar:",
+            "alternativas": [
+                "a) O potencial de valorização das ações",
+                "b) A eficiência da gestão de marketing",
+                "c) A capacidade de pagamento e as garantias disponíveis",
+                "d) A política de distribuição de dividendos"
             ],
-            "correta": 1
+            "correta": "c",
+            "explicacao": "Credores focam em liquidez, endividamento e capacidade de geração de caixa para avaliar se a empresa conseguirá honrar seus compromissos."
         },
         {
-            "pergunta": "3. O Regime de Competência dita que uma despesa deve ser registada:",
-            "opcoes": [
-                "Apenas quando o dinheiro sai da conta bancária.",
-                "Quando o facto económico ocorre, independentemente do pagamento.",
-                "Somente se houver lucro no final do ano.",
-                "Quando o fornecedor envia um brinde."
+            "id": 3,
+            "pergunta": "Qual das seguintes NÃO é uma demonstração financeira obrigatória para sociedades anônimas de capital aberto no Brasil?",
+            "alternativas": [
+                "a) Balanço Patrimonial",
+                "b) Demonstração do Resultado do Exercício",
+                "c) Demonstração do Fluxo de Caixa",
+                "d) Demonstração do Orçamento Realizado"
             ],
-            "correta": 1
+            "correta": "d",
+            "explicacao": "A Demonstração do Orçamento Realizado não faz parte das demonstrações obrigatórias. As obrigatórias incluem: BP, DRE, DFC, DVA, DMPL e Notas Explicativas."
         },
         {
-            "pergunta": "4. Um lucro crescente acompanhado de um caixa operacional negativo persistente é:",
-            "opcoes": [
-                "Um excelente indicador de eficiência.",
-                "Uma 'Red Flag' (sinal de alerta) sobre a qualidade do lucro.",
-                "Impossível de acontecer na contabilidade real.",
-                "O objetivo de todo o gestor financeiro."
+            "id": 4,
+            "pergunta": "O conceito de 'usuário externo' da informação contábil inclui:",
+            "alternativas": [
+                "a) Apenas os acionistas majoritários",
+                "b) Investidores, credores, governo e sociedade em geral",
+                "c) Apenas os funcionários da empresa",
+                "d) Exclusivamente os órgãos reguladores"
             ],
-            "correta": 1
+            "correta": "b",
+            "explicacao": "Usuários externos são todos aqueles que não participam da gestão direta da empresa, incluindo investidores, credores, fornecedores, clientes, governo e a sociedade."
         },
         {
-            "pergunta": "5. O utilizador que foca primordialmente na 'Liquidez' e 'Solvência' é:",
-            "opcoes": [
-                "O Analista de Marketing.",
-                "O Banco ou Credor Financeiro.",
-                "O Cliente do retalho.",
-                "O Estagiário de RH."
+            "id": 5,
+            "pergunta": "A análise de demonstrações financeiras é considerada uma ferramenta de apoio à decisão porque:",
+            "alternativas": [
+                "a) Substitui completamente o julgamento do analista",
+                "b) Garante retornos positivos nos investimentos",
+                "c) Transforma dados contábeis em informações úteis para avaliação",
+                "d) Elimina todos os riscos do negócio"
             ],
-            "correta": 1
+            "correta": "c",
+            "explicacao": "A análise financeira processa e interpreta os dados contábeis, transformando-os em informações que auxiliam (mas não substituem) o julgamento na tomada de decisões."
         }
     ]
-
-    score = 0
-    with st.form("quiz_fixacao_m1"):
-        for i, q in enumerate(questoes):
-            escolha = st.radio(q["pergunta"], q["opcoes"], key=f"q_quiz_{i}")
-            if escolha == q["opcoes"][q["correta"]]:
-                score += 1
+    
+    # Inicializar estado do quiz
+    if 'respostas_quiz' not in st.session_state:
+        st.session_state.respostas_quiz = {q['id']: None for q in questoes}
+    
+    if 'quiz_submetido' not in st.session_state:
+        st.session_state.quiz_submetido = False
+    
+    # Renderizar questões
+    for i, questao in enumerate(questoes):
+        st.markdown(f"""
+            <div style='background-color: #ffffff; padding: 15px; border-radius: 10px; 
+                        border: 1px solid #e2e8f0; margin-bottom: 15px;'>
+                <strong>Questão {questao['id']}:</strong> {questao['pergunta']}
+            </div>
+        """, unsafe_allow_html=True)
         
-        finalizar = st.form_submit_button("Submeter Quiz")
-        if finalizar:
-            st.metric("Pontuação Final", f"{score} / {len(questoes)}")
-            if score == len(questoes):
-                st.balloons()
-                st.success("Excelente! Domina os conceitos básicos da análise financeira.")
-            elif score >= 3:
-                st.info("Bom trabalho! Mas reveja os pontos onde teve dúvidas.")
+        resposta = st.radio(
+            f"Selecione a alternativa para a questão {questao['id']}:",
+            options=questao['alternativas'],
+            key=f"quiz_q{questao['id']}",
+            label_visibility="collapsed"
+        )
+        
+        # Armazenar apenas a letra da resposta
+        if resposta:
+            st.session_state.respostas_quiz[questao['id']] = resposta[0]
+        
+        st.markdown("---")
+    
+    # Botão de submissão
+    col1, col2, col3 = st.columns([1, 1, 1])
+    
+    with col2:
+        if st.button("📨 Enviar Quiz", use_container_width=True, type="primary"):
+            st.session_state.quiz_submetido = True
+    
+    # Exibir resultado do quiz
+    if st.session_state.quiz_submetido:
+        st.markdown("### 🏆 Resultado do Quiz")
+        
+        acertos = 0
+        
+        for questao in questoes:
+            resposta_usuario = st.session_state.respostas_quiz[questao['id']]
+            correta = resposta_usuario == questao['correta']
+            
+            if correta:
+                acertos += 1
+                st.success(f"✅ **Questão {questao['id']}:** Correta!")
             else:
-                st.warning("Recomendamos rever os slides da Aula 1 antes de avançar.")
+                st.error(f"❌ **Questão {questao['id']}:** Incorreta. Resposta correta: **{questao['correta']})**")
+            
+            with st.expander(f"📖 Ver explicação da Questão {questao['id']}"):
+                st.info(questao['explicacao'])
+        
+        # Resumo final
+        percentual = (acertos / len(questoes)) * 100
+        
+        st.markdown("---")
+        
+        if percentual == 100:
+            st.balloons()
+            msg = "🎉 Parabéns! Você acertou todas as questões!"
+            cor = "#dcfce7"
+        elif percentual >= 80:
+            msg = "🌟 Excelente desempenho! Você está bem preparado!"
+            cor = "#dcfce7"
+        elif percentual >= 60:
+            msg = "👍 Bom resultado! Revise os pontos que errou."
+            cor = "#fef3c7"
+        else:
+            msg = "📚 Recomendamos revisar o conteúdo teórico antes de prosseguir."
+            cor = "#fee2e2"
+        
+        st.markdown(f"""
+            <div style='background-color: {cor}; padding: 25px; border-radius: 15px; 
+                        text-align: center; margin-top: 20px;'>
+                <h2>Sua Pontuação: {acertos}/{len(questoes)}</h2>
+                <h3>{percentual:.0f}%</h3>
+                <p style='font-size: 1.1rem;'>{msg}</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        # Botão para refazer
+        st.markdown("")
+        col_a, col_b, col_c = st.columns([1, 1, 1])
+        with col_b:
+            if st.button("🔄 Refazer Quiz", use_container_width=True):
+                st.session_state.respostas_quiz = {q['id']: None for q in questoes}
+                st.session_state.quiz_submetido = False
+                st.rerun()
 
+
+# Execução standalone para testes
 if __name__ == "__main__":
-    # Permite a execução isolada para testes
     run()
