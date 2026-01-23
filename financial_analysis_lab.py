@@ -319,21 +319,12 @@ MODULOS = {
         "arquivo": "modulo15_laboratorio",
         "icone": "🏆",
         "descricao": "Análise integrada completa"
-    },
-    "contato": {
-        "nome": "📬 Contato com o Professor",
-        "arquivo": "contato_professor",
-        "icone": "📬",
-        "descricao": "Dúvidas, sugestões e feedback"
     }
 }
 
-# Lista para o selectbox
-OPCOES_MENU = [info["nome"] for info in MODULOS.values()]
-
 # Inicializar session_state
 if 'modulo_selecionado' not in st.session_state:
-    st.session_state['modulo_selecionado'] = OPCOES_MENU[0]
+    st.session_state['modulo_selecionado'] = "Página Inicial"
 
 # =============================================================================
 # 4. SIDEBAR - NAVEGAÇÃO
@@ -351,39 +342,38 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # Determinar índice atual baseado no session_state
-    try:
-        indice_atual = OPCOES_MENU.index(st.session_state['modulo_selecionado'])
-    except ValueError:
-        indice_atual = 0
-    
-    # Seletor de módulo com callback para atualizar session_state
-    def atualizar_modulo():
-        st.session_state['modulo_selecionado'] = st.session_state['selectbox_modulo']
-    
-    escolha = st.selectbox(
-        "🎓 Selecione o Módulo:",
-        options=OPCOES_MENU,
-        index=indice_atual,
-        key='selectbox_modulo',
-        on_change=atualizar_modulo,
-        help="Escolha a aula que deseja acessar"
-    )
-    
-    # Atualizar session_state com a escolha atual
-    st.session_state['modulo_selecionado'] = escolha
+    # Botão de retorno ao Hub Central
+    if st.button("🏠 Retornar ao Hub Central", use_container_width=True, type="primary"):
+        st.session_state['modulo_selecionado'] = "Página Inicial"
+        st.rerun()
     
     st.markdown("---")
     
-    # Informações do módulo selecionado
-    modulo_key = [k for k, v in MODULOS.items() if v["nome"] == escolha][0]
-    modulo_info = MODULOS[modulo_key]
+    # Informações do módulo atual
+    escolha = st.session_state['modulo_selecionado']
+    
+    # Verificar se é página de contato ou módulo normal
+    if escolha == "Contato com o Professor":
+        icone_atual = "📬"
+        descricao_atual = "Dúvidas, sugestões e feedback"
+    else:
+        modulo_key_list = [k for k, v in MODULOS.items() if v["nome"] == escolha]
+        if modulo_key_list:
+            modulo_info = MODULOS[modulo_key_list[0]]
+            icone_atual = modulo_info['icone']
+            descricao_atual = modulo_info['descricao']
+        else:
+            icone_atual = "🏠"
+            descricao_atual = "Visão geral do laboratório"
     
     st.markdown(f"""
         <div style='background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;'>
-            <p style='font-size: 1.5rem; margin: 0; text-align: center;'>{modulo_info['icone']}</p>
-            <p style='font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 10px;'>
-                {modulo_info['descricao']}
+            <p style='font-size: 1.5rem; margin: 0; text-align: center;'>{icone_atual}</p>
+            <p style='font-size: 0.9rem; color: #ffffff; text-align: center; margin-top: 8px; font-weight: 600;'>
+                {escolha}
+            </p>
+            <p style='font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 5px;'>
+                {descricao_atual}
             </p>
         </div>
     """, unsafe_allow_html=True)
@@ -401,14 +391,6 @@ with st.sidebar:
     
     st.markdown("---")
     
-    # Créditos
-    st.markdown("""
-        <div style='text-align: center; font-size: 0.7rem; color: #64748b;'>
-            <p>COPPEAD/UFRJ</p>
-            <p>Prof. José Américo</p>
-            <p>© 2024-2025</p>
-        </div>
-    """, unsafe_allow_html=True)
 
 # =============================================================================
 # 5. FUNÇÕES DE RENDERIZAÇÃO
@@ -646,6 +628,30 @@ def renderizar_home():
                 ):
                     st.session_state['modulo_selecionado'] = info['nome']
                     st.rerun()
+    
+    # Botão de Contato com o Professor - Destacado
+    st.markdown("---")
+    st.markdown("### 📬 Fale com o Professor")
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown("""
+            <div style='background: linear-gradient(135deg, #1e293b 0%, #334155 100%); 
+                        padding: 20px; border-radius: 12px; text-align: center;
+                        border: 2px solid #b45309;'>
+                <p style='color: #b45309; font-size: 2rem; margin: 0;'>📬</p>
+                <p style='color: white; font-size: 1rem; margin: 10px 0 5px 0; font-weight: 600;'>
+                    Contato com o Professor
+                </p>
+                <p style='color: #94a3b8; font-size: 0.8rem; margin: 0;'>
+                    Dúvidas, sugestões, bugs ou feedback
+                </p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("📤 Enviar Mensagem", key="btn_contato", use_container_width=True, type="primary"):
+            st.session_state['modulo_selecionado'] = "Contato com o Professor"
+            st.rerun()
 
 
 def renderizar_contato():
@@ -852,17 +858,24 @@ def renderizar_em_desenvolvimento(selecao):
 # =============================================================================
 if __name__ == "__main__":
     # Identificar módulo selecionado
-    modulo_key = [k for k, v in MODULOS.items() if v["nome"] == escolha][0]
-    arquivo = MODULOS[modulo_key]["arquivo"]
+    escolha = st.session_state['modulo_selecionado']
     
-    # Carregar módulo
-    carregar_modulo(arquivo)
+    # Verificar se é a página de contato (não está no dicionário MODULOS)
+    if escolha == "Contato com o Professor":
+        renderizar_contato()
+    else:
+        # Buscar no dicionário MODULOS
+        modulo_key = [k for k, v in MODULOS.items() if v["nome"] == escolha]
+        if modulo_key:
+            arquivo = MODULOS[modulo_key[0]]["arquivo"]
+            carregar_modulo(arquivo)
+        else:
+            renderizar_home()
     
     # Footer
     st.markdown("""
         <div class='footer'>
             📊 <strong>Laboratório de Análise de Demonstrações Financeiras</strong> | 
-            COPPEAD/UFRJ | Prof. José Américo | 
-            <a href='#'>Termos de Uso</a>
+            © 2026 - COPPEAD/UFRJ-FGV-UCAM | Prof. José Américo 
         </div>
     """, unsafe_allow_html=True)
